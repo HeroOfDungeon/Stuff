@@ -1,8 +1,9 @@
 const { Client, GatewayIntentBits } = require('discord.js');
 require('dotenv').config();
 
-channel_id = "1243869409265844277"
-correct_content = ["#uselessstory", `<#${channel_id}>`]
+const channel_id = "1243869409265844277"
+const correct_content = ["#uselessstory", `<#${channel_id}>`]
+const message_delete_delay = 60000 // Messured in ms
 
 const client = new Client({
     intents: [
@@ -18,16 +19,16 @@ client.on('ready', () => { // Notify that the bot is running
 
 client.on('messageCreate', async message => {
     if (message.channelId != channel_id) return; // Skip messegas not sent in the correct channel
-    if (message.author.bot) return; // Skip messages from other bots
+    if (message.author.bot) return; // Skip messages from bots
 
     if (!correct_content.some(word => message.content.toLowerCase().includes(word))) { // Check if none of the correct words are in the message
         const msg = await message.reply({ // Reply with message
-            content: `<@${message.author.id}> remember to add \`#uselessstory\` to your message!\n-# This message deletes itself in 5 seconds`
+            content: `Remember to add \`#uselessstory\` to your message!\n-# This message deletes itself in 5 seconds`
         });
 
         setTimeout(() => { // Delete after 5000ms
             msg.delete().catch(console.error)
-        }, 5000);
+        }, message_delete_delay);
     }
 });
 
