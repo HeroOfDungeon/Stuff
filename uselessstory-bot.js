@@ -22,12 +22,12 @@ client.on('messageCreate', async message => {
 
     if (!correct_content.some(word => message.content.toLowerCase().includes(word))) { // Check if none of the correct words are in the message
         const msg = await message.reply({ // Reply with message
-            content: `<@${message.author.id}> remember to add \`#uselessstory\` to your message!\n-# This message deletes itself in 5 seconds`
+            content: `<@${message.author.id}> remember to add \`#uselessstory\` to your message!\n-# This message deletes itself in 2 minutes`
         });
 
         setTimeout(() => { // Delete after 5000ms
             msg.delete().catch(console.error)
-        }, 5000);
+        }, 120,000);
     }
 });
 
