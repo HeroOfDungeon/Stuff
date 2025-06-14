@@ -28,7 +28,9 @@ client.on('messageCreate', async message => {
 
         setTimeout(() => { // Delete messages after set time
             msg.delete().catch(console.error)
-            message.delete().catch(console.error)
+            if (correct_content.some(word => message.content.toLowerCase().includes(word))) { // Delete message if it still doesn't have the rquirements
+                message.delete().catch(console.error)
+            }
         }, (message_delete_delay * 1000));
     }
 });
